@@ -2,6 +2,8 @@ package laboratorio6_gabrielvasquez;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -46,6 +48,18 @@ public class Login extends javax.swing.JFrame {
         cb_giallo = new javax.swing.JCheckBox();
         cb_blanco = new javax.swing.JCheckBox();
         dialog_Factura = new javax.swing.JDialog();
+        products = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        b_palalista = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        list = new javax.swing.JList<>();
+        b_facturar = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        popup = new javax.swing.JPopupMenu();
+        pop_eliminar = new javax.swing.JMenuItem();
+        pop_modificar = new javax.swing.JMenuItem();
+        ppup = new javax.swing.JPopupMenu();
+        quitarlist = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -251,16 +265,103 @@ public class Login extends javax.swing.JFrame {
                         .addContainerGap(20, Short.MAX_VALUE))))
         );
 
+        jLabel14.setFont(new java.awt.Font("Dialog", 1, 30)); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Productos a Cotizar");
+
+        b_palalista.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        b_palalista.setText("Agregar");
+        b_palalista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_palalistaMouseClicked(evt);
+            }
+        });
+
+        list.setModel(new DefaultListModel());
+        list.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(list);
+
+        b_facturar.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        b_facturar.setText("Facturar");
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Lista de Productos");
+
         javax.swing.GroupLayout dialog_FacturaLayout = new javax.swing.GroupLayout(dialog_Factura.getContentPane());
         dialog_Factura.getContentPane().setLayout(dialog_FacturaLayout);
         dialog_FacturaLayout.setHorizontalGroup(
             dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialog_FacturaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(products, 0, 250, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(124, 124, 124))
+            .addGroup(dialog_FacturaLayout.createSequentialGroup()
+                .addGroup(dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialog_FacturaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dialog_FacturaLayout.createSequentialGroup()
+                        .addGap(203, 203, 203)
+                        .addComponent(b_palalista, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 201, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(dialog_FacturaLayout.createSequentialGroup()
+                .addGap(202, 202, 202)
+                .addComponent(b_facturar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(dialog_FacturaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         dialog_FacturaLayout.setVerticalGroup(
             dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(dialog_FacturaLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(products, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(b_palalista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(b_facturar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
+
+        pop_eliminar.setText("Eliminar");
+        pop_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pop_eliminarActionPerformed(evt);
+            }
+        });
+        popup.add(pop_eliminar);
+
+        pop_modificar.setText("Modificar");
+        pop_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pop_modificarActionPerformed(evt);
+            }
+        });
+        popup.add(pop_modificar);
+
+        quitarlist.setText("Quitar");
+        quitarlist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitarlistActionPerformed(evt);
+            }
+        });
+        ppup.add(quitarlist);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -289,6 +390,11 @@ public class Login extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(table);
@@ -351,8 +457,8 @@ public class Login extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();
@@ -424,7 +530,7 @@ public class Login extends javax.swing.JFrame {
             cb_giallo.setSelected(false);
             cb_rojo.setSelected(false);
             cb_verde.setSelected(false);
-            
+
             Object[] newrow = {
                 nuevo.getCodigo(),
                 nuevo.getMarca(),
@@ -441,8 +547,56 @@ public class Login extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) table.getModel();
             modelo.addRow(newrow);
             table.setModel(modelo);
+
+            DefaultComboBoxModel cb = (DefaultComboBoxModel) products.getModel();
+            cb.addElement(nuevo);
+            products.setModel(cb);
         }
     }//GEN-LAST:event_b_crearProductoMouseClicked
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        if (evt.isMetaDown()) {
+            if (table.getSelectedRow() >= 0) {
+                popup.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_tableMouseClicked
+
+    private void pop_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pop_eliminarActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            modelo.removeRow(table.getSelectedRow());
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_pop_eliminarActionPerformed
+
+    private void pop_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pop_modificarActionPerformed
+
+    }//GEN-LAST:event_pop_modificarActionPerformed
+
+    private void b_palalistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_palalistaMouseClicked
+        DefaultListModel modelo = (DefaultListModel) list.getModel();
+        modelo.addElement(products.getSelectedItem());
+        list.setModel(modelo);
+    }//GEN-LAST:event_b_palalistaMouseClicked
+
+    private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
+        if (list.getSelectedIndex() >= 0) {
+            if (evt.isMetaDown()) {
+                ppup.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_listMouseClicked
+
+    private void quitarlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarlistActionPerformed
+        if (list.getSelectedIndex() >= 0) {
+            DefaultListModel modelo = (DefaultListModel) list.getModel();
+            modelo.remove(list.getSelectedIndex());
+            list.setModel(modelo);
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento de la lista");
+        }
+    }//GEN-LAST:event_quitarlistActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -471,6 +625,8 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_crearProducto;
+    private javax.swing.JButton b_facturar;
+    private javax.swing.JButton b_palalista;
     private javax.swing.JCheckBox cb_azul;
     private javax.swing.JCheckBox cb_blanco;
     private javax.swing.JCheckBox cb_giallo;
@@ -483,6 +639,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -495,6 +653,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> list;
     private javax.swing.JMenuItem mi_crearFactura;
     private javax.swing.JMenuItem mi_crearProducto;
     private javax.swing.JSpinner p_alcohol;
@@ -507,6 +667,12 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField p_nombre;
     private javax.swing.JSpinner p_precio;
     private com.toedter.calendar.JDateChooser p_vencimiento;
+    private javax.swing.JMenuItem pop_eliminar;
+    private javax.swing.JMenuItem pop_modificar;
+    private javax.swing.JPopupMenu popup;
+    private javax.swing.JPopupMenu ppup;
+    private javax.swing.JComboBox<String> products;
+    private javax.swing.JMenuItem quitarlist;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

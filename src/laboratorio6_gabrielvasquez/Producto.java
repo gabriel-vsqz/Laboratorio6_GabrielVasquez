@@ -122,7 +122,7 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto: " + nombre;
+        return "" + nombre;
     }
     
 }
