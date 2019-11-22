@@ -2,7 +2,7 @@ package laboratorio6_gabrielvasquez;
 
 import java.util.ArrayList;
 
-public class Producto {
+public class Bebida {
  
     private String codigo;
     private String marca;
@@ -16,10 +16,10 @@ public class Producto {
     private int cantidad;
     private String vencimiento;
 
-    public Producto() {
+    public Bebida() {
     }
 
-    public Producto(String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, String vencimiento) {
+    public Bebida(String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, String vencimiento) {
         this.codigo = codigo;
         this.marca = marca;
         this.nombre = nombre;

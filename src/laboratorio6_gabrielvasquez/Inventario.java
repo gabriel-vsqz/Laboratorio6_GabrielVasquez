@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Inventario {
  
-    private ArrayList<Producto> productos = new ArrayList();
+    private ArrayList<Bebida> productos = new ArrayList();
     private File archivo = null;
 
     public Inventario() {
@@ -19,11 +19,11 @@ public class Inventario {
         this.archivo = new File(path);
     }
 
-    public ArrayList<Producto> getProductos() {
+    public ArrayList<Bebida> getProductos() {
         return productos;
     }
 
-    public void setProductos(ArrayList<Producto> productos) {
+    public void setProductos(ArrayList<Bebida> productos) {
         this.productos = productos;
     }
 
@@ -48,7 +48,7 @@ public class Inventario {
                 sc = new Scanner(archivo);
                 sc.useDelimiter("|");
                 while (sc.hasNext()) {
-                    productos.add(new Producto(sc.next(),sc.next(),sc.next(),sc.nextInt(),sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next()));
+                    productos.add(new Bebida(sc.next(),sc.next(),sc.next(),sc.nextInt(),sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next()));
                 }
             } catch (Exception e) {
             }
@@ -62,7 +62,7 @@ public class Inventario {
         try {
             fw = new FileWriter(archivo, false);
             bw = new BufferedWriter(fw);
-            for (Producto t : productos) {
+            for (Bebida t : productos) {
                 //String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, String vencimiento
                 bw.write(t.getCodigo()+ "|");
                 bw.write(t.getMarca() + "|");
