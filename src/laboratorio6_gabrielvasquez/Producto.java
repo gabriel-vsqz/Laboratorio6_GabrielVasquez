@@ -1,7 +1,6 @@
 package laboratorio6_gabrielvasquez;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Producto {
  
@@ -15,12 +14,12 @@ public class Producto {
     private ArrayList<String> colorantes = new ArrayList();
     private int precio;
     private int cantidad;
-    private Date vencimineto;
+    private String vencimiento;
 
     public Producto() {
     }
 
-    public Producto(String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, Date vencimineto) {
+    public Producto(String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, String vencimiento) {
         this.codigo = codigo;
         this.marca = marca;
         this.nombre = nombre;
@@ -30,7 +29,7 @@ public class Producto {
         this.lote = lote;
         this.precio = precio;
         this.cantidad = cantidad;
-        this.vencimineto = vencimineto;
+        this.vencimiento = vencimiento;
     }
 
     public String getCodigo() {
@@ -113,17 +112,17 @@ public class Producto {
         this.cantidad = cantidad;
     }
 
-    public Date getVencimineto() {
-        return vencimineto;
+    public String getVencimiento() {
+        return vencimiento;
     }
 
-    public void setVencimineto(Date vencimineto) {
-        this.vencimineto = vencimineto;
+    public void setVencimiento(String vencimiento) {
+        this.vencimiento = vencimiento;
     }
 
     @Override
     public String toString() {
-        return "Producto " + nombre;
+        return "Producto: " + nombre;
     }
     
 }

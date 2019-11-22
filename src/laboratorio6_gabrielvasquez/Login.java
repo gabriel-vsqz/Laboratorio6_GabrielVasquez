@@ -1,6 +1,9 @@
 package laboratorio6_gabrielvasquez;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Login extends javax.swing.JFrame {
 
@@ -27,21 +30,25 @@ public class Login extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         p_marca = new javax.swing.JTextField();
         p_alcohol = new javax.swing.JSpinner();
-        p_lote = new javax.swing.JTextField();
         p_precio = new javax.swing.JSpinner();
         p_cantidad = new javax.swing.JSpinner();
         p_vencimiento = new com.toedter.calendar.JDateChooser();
         b_crearProducto = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         p_nacional = new javax.swing.JComboBox<>();
-        p_colorante = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         p_codigo = new javax.swing.JTextField();
         p_azucar = new javax.swing.JSpinner();
+        p_lote = new javax.swing.JSpinner();
+        cb_azul = new javax.swing.JCheckBox();
+        cb_rojo = new javax.swing.JCheckBox();
+        cb_verde = new javax.swing.JCheckBox();
+        cb_giallo = new javax.swing.JCheckBox();
+        cb_blanco = new javax.swing.JCheckBox();
         dialog_Factura = new javax.swing.JDialog();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mi_crearProducto = new javax.swing.JMenuItem();
@@ -102,14 +109,24 @@ public class Login extends javax.swing.JFrame {
         p_nacional.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         p_nacional.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
 
-        p_colorante.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        p_colorante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Azul-4", "Rojo-69", "Verde-420", "Amarillo-77", "Blanco-07" }));
-
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         jLabel13.setText("Código");
 
         p_azucar.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         p_azucar.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        p_lote.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        p_lote.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        cb_azul.setText("Azul-4");
+
+        cb_rojo.setText("Rojo_69");
+
+        cb_verde.setText("Verde-420");
+
+        cb_giallo.setText("Amarillo-77");
+
+        cb_blanco.setText("Blanco-07");
 
         javax.swing.GroupLayout dialog_ProductoLayout = new javax.swing.GroupLayout(dialog_Producto.getContentPane());
         dialog_Producto.getContentPane().setLayout(dialog_ProductoLayout);
@@ -144,21 +161,31 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(p_lote)
+                        .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(p_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_vencimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(p_colorante, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(p_vencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(p_lote, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(p_precio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                            .addGroup(dialog_ProductoLayout.createSequentialGroup()
+                                .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cb_blanco)
+                                    .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cb_verde)
+                                        .addComponent(cb_azul)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cb_rojo)
+                                    .addComponent(cb_giallo)))))
                     .addGroup(dialog_ProductoLayout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(p_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41))
             .addGroup(dialog_ProductoLayout.createSequentialGroup()
-                .addGap(450, 450, 450)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(b_crearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(520, 520, 520))
         );
         dialog_ProductoLayout.setVerticalGroup(
             dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +217,7 @@ public class Login extends javax.swing.JFrame {
                         .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(p_lote, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
+                        .addGap(41, 41, 41)
                         .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(p_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,10 +234,21 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(p_nacional, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(p_colorante, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(b_crearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(cb_azul)
+                    .addComponent(cb_rojo))
+                .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialog_ProductoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(b_crearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))
+                    .addGroup(dialog_ProductoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(dialog_ProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cb_verde)
+                            .addComponent(cb_giallo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cb_blanco)
+                        .addContainerGap(20, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout dialog_FacturaLayout = new javax.swing.GroupLayout(dialog_Factura.getContentPane());
@@ -230,7 +268,7 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Supermercado El Barrio");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -253,19 +291,19 @@ public class Login extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-            jTable1.getColumnModel().getColumn(8).setResizable(false);
-            jTable1.getColumnModel().getColumn(9).setResizable(false);
-            jTable1.getColumnModel().getColumn(10).setResizable(false);
+        jScrollPane1.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setResizable(false);
+            table.getColumnModel().getColumn(1).setResizable(false);
+            table.getColumnModel().getColumn(2).setResizable(false);
+            table.getColumnModel().getColumn(3).setResizable(false);
+            table.getColumnModel().getColumn(4).setResizable(false);
+            table.getColumnModel().getColumn(5).setResizable(false);
+            table.getColumnModel().getColumn(6).setResizable(false);
+            table.getColumnModel().getColumn(7).setResizable(false);
+            table.getColumnModel().getColumn(8).setResizable(false);
+            table.getColumnModel().getColumn(9).setResizable(false);
+            table.getColumnModel().getColumn(10).setResizable(false);
         }
 
         jMenu1.setText("Productos");
@@ -335,22 +373,75 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_mi_crearProductoActionPerformed
 
     private void b_crearProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_crearProductoMouseClicked
-        String c,m,n,pert;
-        int az,ah,l,pre,cant;
+        String c, m, n, pert, nv;
+        int az, ah, l, pre, cant;
         Date v;
-        //String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, Date vencimineto
         c = p_codigo.getText();
         m = p_marca.getText();
         n = p_nombre.getText();
-        az = (int)p_azucar.getValue();
-        ah = (int)p_alcohol.getValue();
-        pert = (String)p_nacional.getSelectedItem();
-        l = Integer.parseInt(p_lote.getText());
-        pre = (int)p_precio.getValue();
-        cant = (int)p_cantidad.getValue();
+        az = (int) p_azucar.getValue();
+        ah = (int) p_alcohol.getValue();
+        pert = (String) p_nacional.getSelectedItem();
+        l = (int) p_lote.getValue();
+        pre = (int) p_precio.getValue();
+        cant = (int) p_cantidad.getValue();
         v = p_vencimiento.getDate();
-        
-        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+        nv = sdf.format(v);
+
+        if (c.equals("") || m.equals("") || n.equals("")) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar todos los campos requeridos");
+        } else {
+            Producto nuevo = new Producto(c, m, n, az, ah, pert, l, pre, cant, nv);
+            if (cb_azul.isSelected()) {
+                nuevo.getColorantes().add("Azul-77");
+            }
+            if (cb_blanco.isSelected()) {
+                nuevo.getColorantes().add("Blanco-07");
+            }
+            if (cb_giallo.isSelected()) {
+                nuevo.getColorantes().add("Amarillo-77");
+            }
+            if (cb_rojo.isSelected()) {
+                nuevo.getColorantes().add("Rojo-69");
+            }
+            if (cb_verde.isSelected()) {
+                nuevo.getColorantes().add("Verde-420");
+            }
+            JOptionPane.showMessageDialog(this, "Producto Creado");
+
+            p_codigo.setText("");
+            p_marca.setText("");
+            p_nombre.setText("");
+            p_azucar.setValue(0);
+            p_alcohol.setValue(0);
+            p_nacional.setSelectedIndex(0);
+            p_lote.setValue(0);
+            p_precio.setValue(0);
+            p_cantidad.setValue(0);
+            cb_azul.setSelected(false);
+            cb_blanco.setSelected(false);
+            cb_giallo.setSelected(false);
+            cb_rojo.setSelected(false);
+            cb_verde.setSelected(false);
+            
+            Object[] newrow = {
+                nuevo.getCodigo(),
+                nuevo.getMarca(),
+                nuevo.getNombre(),
+                nuevo.getAzucar(),
+                nuevo.getAlcohol(),
+                nuevo.getPertenencia(),
+                nuevo.getLote(),
+                nuevo.getColorantes(),
+                nuevo.getPrecio(),
+                nuevo.getCantidad(),
+                nuevo.getVencimiento()
+            };
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            modelo.addRow(newrow);
+            table.setModel(modelo);
+        }
     }//GEN-LAST:event_b_crearProductoMouseClicked
 
     public static void main(String args[]) {
@@ -380,6 +471,11 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_crearProducto;
+    private javax.swing.JCheckBox cb_azul;
+    private javax.swing.JCheckBox cb_blanco;
+    private javax.swing.JCheckBox cb_giallo;
+    private javax.swing.JCheckBox cb_rojo;
+    private javax.swing.JCheckBox cb_verde;
     private javax.swing.JDialog dialog_Factura;
     private javax.swing.JDialog dialog_Producto;
     private javax.swing.JLabel jLabel1;
@@ -399,19 +495,18 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JMenuItem mi_crearFactura;
     private javax.swing.JMenuItem mi_crearProducto;
     private javax.swing.JSpinner p_alcohol;
     private javax.swing.JSpinner p_azucar;
     private javax.swing.JSpinner p_cantidad;
     private javax.swing.JTextField p_codigo;
-    private javax.swing.JComboBox<String> p_colorante;
-    private javax.swing.JTextField p_lote;
+    private javax.swing.JSpinner p_lote;
     private javax.swing.JTextField p_marca;
     private javax.swing.JComboBox<String> p_nacional;
     private javax.swing.JTextField p_nombre;
     private javax.swing.JSpinner p_precio;
     private com.toedter.calendar.JDateChooser p_vencimiento;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
