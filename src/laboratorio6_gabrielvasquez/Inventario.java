@@ -27,6 +27,14 @@ public class Inventario {
         this.productos = productos;
     }
 
+    public File getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(File archivo) {
+        this.archivo = archivo;
+    }
+
     @Override
     public String toString() {
         return "Inventario " + productos;
@@ -38,7 +46,7 @@ public class Inventario {
         if (archivo.exists()) {
             try {
                 sc = new Scanner(archivo);
-                sc.useDelimiter(";");
+                sc.useDelimiter("|");
                 while (sc.hasNext()) {
                     productos.add(new Producto(sc.next(),sc.next(),sc.next(),sc.nextInt(),sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next()));
                 }

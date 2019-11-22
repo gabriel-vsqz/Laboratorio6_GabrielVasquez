@@ -1,7 +1,15 @@
 package laboratorio6_gabrielvasquez;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -12,6 +20,27 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
+//        Inventario i = new Inventario("./Productos.txt");
+//
+//        i.cargarArchivo();
+//        
+//        Scanner sc = null;
+//        ArrayList<Producto> charge = new ArrayList();
+//        if (i.getArchivo().exists()) {
+//            try {
+//                sc = new Scanner(i.getArchivo());
+//                sc.useDelimiter("|");
+//                while (sc.hasNext()) {
+//                    charge.add(new Producto(sc.next(),sc.next(),sc.next(),sc.nextInt(),sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next()));
+//                }
+//            } catch (Exception e) {
+//            }
+//            sc.close();
+//        }
+
+//        DefaultComboBoxModel cb = (DefaultComboBoxModel) products.getModel();
+//        cb.addElement();
+//        products.setModel(cb);
     }
 
     @SuppressWarnings("unchecked")
@@ -55,6 +84,7 @@ public class Login extends javax.swing.JFrame {
         list = new javax.swing.JList<>();
         b_facturar = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
+        js_cant = new javax.swing.JSpinner();
         popup = new javax.swing.JPopupMenu();
         pop_eliminar = new javax.swing.JMenuItem();
         pop_modificar = new javax.swing.JMenuItem();
@@ -287,10 +317,18 @@ public class Login extends javax.swing.JFrame {
 
         b_facturar.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         b_facturar.setText("Facturar");
+        b_facturar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_facturarMouseClicked(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Lista de Productos");
+
+        js_cant.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        js_cant.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         javax.swing.GroupLayout dialog_FacturaLayout = new javax.swing.GroupLayout(dialog_Factura.getContentPane());
         dialog_Factura.getContentPane().setLayout(dialog_FacturaLayout);
@@ -298,9 +336,7 @@ public class Login extends javax.swing.JFrame {
             dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialog_FacturaLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(products, 0, 250, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(124, 124, 124))
             .addGroup(dialog_FacturaLayout.createSequentialGroup()
                 .addGroup(dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,9 +344,13 @@ public class Login extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(dialog_FacturaLayout.createSequentialGroup()
-                        .addGap(203, 203, 203)
-                        .addComponent(b_palalista, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 201, Short.MAX_VALUE)))
+                        .addGap(60, 60, 60)
+                        .addGroup(dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(b_palalista, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(products, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(js_cant, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 96, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(dialog_FacturaLayout.createSequentialGroup()
                 .addGap(202, 202, 202)
@@ -327,11 +367,13 @@ public class Login extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(products, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(dialog_FacturaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(js_cant, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(products, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(b_palalista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -479,7 +521,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_mi_crearProductoActionPerformed
 
     private void b_crearProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_crearProductoMouseClicked
-        String c, m, n, pert, nv;
+        String c, m, n, pert, nv = "";
         int az, ah, l, pre, cant;
         Date v;
         c = p_codigo.getText();
@@ -490,10 +532,19 @@ public class Login extends javax.swing.JFrame {
         pert = (String) p_nacional.getSelectedItem();
         l = (int) p_lote.getValue();
         pre = (int) p_precio.getValue();
-        cant = (int) p_cantidad.getValue();
-        v = p_vencimiento.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
-        nv = sdf.format(v);
+        cant = (int) p_cantidad.getValue();    
+            try {
+                v = p_vencimiento.getDate();
+                if (p_vencimiento.equals(null)) {
+                    JOptionPane.showMessageDialog(jMenu1, "Debe ingresar una fecha");
+                } else {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+                    nv = sdf.format(v);            
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Debe ingresar una fecha");
+            }
 
         if (c.equals("") || m.equals("") || n.equals("")) {
             JOptionPane.showMessageDialog(this, "Debe ingresar todos los campos requeridos");
@@ -567,17 +618,20 @@ public class Login extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) table.getModel();
             modelo.removeRow(table.getSelectedRow());
             table.setModel(modelo);
+            items.remove(table.getSelectedRow());
         }
     }//GEN-LAST:event_pop_eliminarActionPerformed
 
     private void pop_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pop_modificarActionPerformed
-
+        
     }//GEN-LAST:event_pop_modificarActionPerformed
 
     private void b_palalistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_palalistaMouseClicked
         DefaultListModel modelo = (DefaultListModel) list.getModel();
         modelo.addElement(products.getSelectedItem());
         list.setModel(modelo);
+        js_cant.setValue(1);
+        items.add((Producto)products.getSelectedItem());
     }//GEN-LAST:event_b_palalistaMouseClicked
 
     private void listMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listMouseClicked
@@ -593,10 +647,45 @@ public class Login extends javax.swing.JFrame {
             DefaultListModel modelo = (DefaultListModel) list.getModel();
             modelo.remove(list.getSelectedIndex());
             list.setModel(modelo);
+            items.remove(list.getSelectedIndex());
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un elemento de la lista");
         }
     }//GEN-LAST:event_quitarlistActionPerformed
+
+    private void b_facturarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_facturarMouseClicked
+        int cont = 1;
+        try {           
+            File archivo = null;
+            FileWriter fw = null;
+            BufferedWriter bw = null;
+            try {
+                archivo = new File("./facturas/Factura" + cont +".txt");
+                fw = new FileWriter(archivo, true);
+                bw = new BufferedWriter(fw);
+                Date hoy = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                String oggi = format.format(hoy);
+                bw.write("          Supermercado El Barrio          ");
+                bw.newLine();
+                bw.write("Factura #" + cont + "         " + hoy);
+                bw.newLine();
+                bw.write("Produc.               Cant                Precio");
+                for (Producto item : items) {
+                    bw.write(item.toString() + "                " + (int)js_cant.getValue() + "              L." + item.getPrecio()*(int)js_cant.getValue());
+                    bw.newLine();
+                }
+                bw.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cont++;
+            bw.close();
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_b_facturarMouseClicked
 
     public static void main(String args[]) {
         try {
@@ -654,6 +743,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSpinner js_cant;
     private javax.swing.JList<String> list;
     private javax.swing.JMenuItem mi_crearFactura;
     private javax.swing.JMenuItem mi_crearProducto;
@@ -675,4 +765,5 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JMenuItem quitarlist;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
+    ArrayList<Producto> items = new ArrayList();
 }
