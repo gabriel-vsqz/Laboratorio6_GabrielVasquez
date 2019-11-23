@@ -1,6 +1,7 @@
 package laboratorio6_gabrielvasquez;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Bebida {
  
@@ -32,6 +33,24 @@ public class Bebida {
         this.vencimiento = vencimiento;
     }
 
+    public Bebida(String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, String vencimiento, String coloranteslist) {
+        this.codigo = codigo;
+        this.marca = marca;
+        this.nombre = nombre;
+        this.azucar = azucar;
+        this.alcohol = alcohol;
+        this.pertenencia = pertenencia;
+        this.lote = lote;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.vencimiento = vencimiento;
+        Scanner sc = new Scanner(coloranteslist);
+        sc.useDelimiter(",");
+        while (sc.hasNext()) {
+            this.colorantes.add(sc.next());
+        }
+    }
+    
     public String getCodigo() {
         return codigo;
     }

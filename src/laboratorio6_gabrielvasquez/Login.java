@@ -1,11 +1,14 @@
 package laboratorio6_gabrielvasquez;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -18,29 +21,51 @@ import javax.swing.table.DefaultTableModel;
 public class Login extends javax.swing.JFrame {
 
     public Login() {
-        initComponents();
-        setLocationRelativeTo(null);
-//        Inventario i = new Inventario("./Productos.txt");
-//
-//        i.cargarArchivo();
-//        
-//        Scanner sc = null;
-//        ArrayList<Producto> charge = new ArrayList();
-//        if (i.getArchivo().exists()) {
-//            try {
-//                sc = new Scanner(i.getArchivo());
-//                sc.useDelimiter("|");
-//                while (sc.hasNext()) {
-//                    charge.add(new Bebida(sc.next(),sc.next(),sc.next(),sc.nextInt(),sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next()));
-//                }
-//            } catch (Exception e) {
-//            }
-//            sc.close();
-//        }
+        try {
+            initComponents();
+            setLocationRelativeTo(null);
+            File archivo = null;
+            FileReader fr = null;
+            BufferedReader br = null;
+            try {
+                archivo = new File("./Productos.txt");
+                fr = new FileReader(archivo);
+                br = new BufferedReader(fr);
+                String linea;
+                while ((linea = br.readLine()) != null) {
+                    Object[] atributo = linea.split(";");
+                    //productos.add(new Bebida(sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next())
+                    cargados.add(new Bebida((String) atributo[0], (String) atributo[1], (String) atributo[2], Integer.parseInt(atributo[3].toString()), Integer.parseInt(atributo[4].toString()), (String) atributo[5], Integer.parseInt(atributo[6].toString()), Integer.parseInt(atributo[7].toString()), Integer.parseInt(atributo[8].toString()), (String) atributo[9]));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            br.close();
+            fr.close();
 
-//        DefaultComboBoxModel cb = (DefaultComboBoxModel) products.getModel();
-//        cb.addElement();
-//        products.setModel(cb);
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            for (Bebida b : cargados) {
+                Object[] cargado = {
+                    b.getCodigo(),
+                    b.getMarca(),
+                    b.getNombre(),
+                    b.getAzucar(),
+                    b.getAlcohol(),
+                    b.getPertenencia(),
+                    b.getLote(),
+                    b.getPrecio(),
+                    b.getColorantes(),
+                    b.getCantidad(),
+                    b.getVencimiento()
+                };
+                model.addRow(cargado);
+            }
+            table.setModel(model);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -87,38 +112,16 @@ public class Login extends javax.swing.JFrame {
         js_cant = new javax.swing.JSpinner();
         popup = new javax.swing.JPopupMenu();
         pop_eliminar = new javax.swing.JMenuItem();
-        pop_modificar = new javax.swing.JMenuItem();
+        mod_codigo = new javax.swing.JMenuItem();
+        mod_marca = new javax.swing.JMenuItem();
+        mod_nombre = new javax.swing.JMenuItem();
+        mod_azucar = new javax.swing.JMenuItem();
+        mod_alcohol = new javax.swing.JMenuItem();
+        mod_lote = new javax.swing.JMenuItem();
+        mod_precio = new javax.swing.JMenuItem();
+        mod_cantidad = new javax.swing.JMenuItem();
         ppup = new javax.swing.JPopupMenu();
         quitarlist = new javax.swing.JMenuItem();
-        dialog_Mod = new javax.swing.JDialog();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        p_nombre1 = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        p_marca1 = new javax.swing.JTextField();
-        p_alcohol1 = new javax.swing.JSpinner();
-        p_precio1 = new javax.swing.JSpinner();
-        p_cantidad1 = new javax.swing.JSpinner();
-        p_vencimiento1 = new com.toedter.calendar.JDateChooser();
-        b_modProducto = new javax.swing.JButton();
-        jLabel26 = new javax.swing.JLabel();
-        p_nacional1 = new javax.swing.JComboBox<>();
-        jLabel27 = new javax.swing.JLabel();
-        p_codigo1 = new javax.swing.JTextField();
-        p_azucar1 = new javax.swing.JSpinner();
-        p_lote1 = new javax.swing.JSpinner();
-        cb_azul1 = new javax.swing.JCheckBox();
-        cb_rojo1 = new javax.swing.JCheckBox();
-        cb_verde1 = new javax.swing.JCheckBox();
-        cb_giallo1 = new javax.swing.JCheckBox();
-        cb_blanco1 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
@@ -418,13 +421,69 @@ public class Login extends javax.swing.JFrame {
         });
         popup.add(pop_eliminar);
 
-        pop_modificar.setText("Modificar");
-        pop_modificar.addActionListener(new java.awt.event.ActionListener() {
+        mod_codigo.setText("Modificar Código");
+        mod_codigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pop_modificarActionPerformed(evt);
+                mod_codigoActionPerformed(evt);
             }
         });
-        popup.add(pop_modificar);
+        popup.add(mod_codigo);
+
+        mod_marca.setText("Modificar Marca");
+        mod_marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mod_marcaActionPerformed(evt);
+            }
+        });
+        popup.add(mod_marca);
+
+        mod_nombre.setText("Modificar Nombre");
+        mod_nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mod_nombreActionPerformed(evt);
+            }
+        });
+        popup.add(mod_nombre);
+
+        mod_azucar.setText("Modificar Azúcar");
+        mod_azucar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mod_azucarActionPerformed(evt);
+            }
+        });
+        popup.add(mod_azucar);
+
+        mod_alcohol.setText("Modificar Alcohol");
+        mod_alcohol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mod_alcoholActionPerformed(evt);
+            }
+        });
+        popup.add(mod_alcohol);
+
+        mod_lote.setText("Modificar Lote");
+        mod_lote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mod_loteActionPerformed(evt);
+            }
+        });
+        popup.add(mod_lote);
+
+        mod_precio.setText("Modificar Precio");
+        mod_precio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mod_precioActionPerformed(evt);
+            }
+        });
+        popup.add(mod_precio);
+
+        mod_cantidad.setText("Modificar Cantidad");
+        mod_cantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mod_cantidadActionPerformed(evt);
+            }
+        });
+        popup.add(mod_cantidad);
 
         quitarlist.setText("Quitar");
         quitarlist.addActionListener(new java.awt.event.ActionListener() {
@@ -433,202 +492,6 @@ public class Login extends javax.swing.JFrame {
             }
         });
         ppup.add(quitarlist);
-
-        jLabel16.setFont(new java.awt.Font("Dialog", 1, 40)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Modificar Producto");
-
-        jLabel17.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel17.setText("Nombre");
-
-        jLabel18.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel18.setText("Marca");
-
-        jLabel19.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel19.setText("Cantidad de Azúcar");
-
-        jLabel20.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel20.setText("Cantidad de Alcohol (%)");
-
-        jLabel21.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel21.setText("Bebida Nacional");
-
-        jLabel22.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel22.setText("Número de Lote");
-
-        jLabel23.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel23.setText("Precio");
-
-        jLabel24.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel24.setText("Cantidad");
-
-        jLabel25.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel25.setText("Fecha de Vencimineto");
-
-        p_alcohol1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        p_alcohol1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
-
-        p_precio1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        p_precio1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-
-        p_cantidad1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        p_cantidad1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-
-        b_modProducto.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        b_modProducto.setText("Modificar");
-        b_modProducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                b_modProductoMouseClicked(evt);
-            }
-        });
-
-        jLabel26.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel26.setText("Coloroantes");
-
-        p_nacional1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        p_nacional1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Si", "No" }));
-
-        jLabel27.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
-        jLabel27.setText("Código");
-
-        p_azucar1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        p_azucar1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-
-        p_lote1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        p_lote1.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
-
-        cb_azul1.setText("Azul-4");
-
-        cb_rojo1.setText("Rojo_69");
-
-        cb_verde1.setText("Verde-420");
-
-        cb_giallo1.setText("Amarillo-77");
-
-        cb_blanco1.setText("Blanco-07");
-
-        javax.swing.GroupLayout dialog_ModLayout = new javax.swing.GroupLayout(dialog_Mod.getContentPane());
-        dialog_Mod.getContentPane().setLayout(dialog_ModLayout);
-        dialog_ModLayout.setHorizontalGroup(
-            dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialog_ModLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(dialog_ModLayout.createSequentialGroup()
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(p_marca1)
-                            .addComponent(p_nombre1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(p_azucar1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(p_nacional1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(p_alcohol1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))))
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dialog_ModLayout.createSequentialGroup()
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(p_cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_vencimiento1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(p_lote1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(p_precio1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
-                            .addGroup(dialog_ModLayout.createSequentialGroup()
-                                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cb_blanco1)
-                                    .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(cb_verde1)
-                                        .addComponent(cb_azul1)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cb_rojo1)
-                                    .addComponent(cb_giallo1)))))
-                    .addGroup(dialog_ModLayout.createSequentialGroup()
-                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(p_codigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(41, 41, 41))
-            .addGroup(dialog_ModLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(b_modProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(520, 520, 520))
-        );
-        dialog_ModLayout.setVerticalGroup(
-            dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialog_ModLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(p_codigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(dialog_ModLayout.createSequentialGroup()
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_marca1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_azucar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_alcohol1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(dialog_ModLayout.createSequentialGroup()
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_lote1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(41, 41, 41)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_precio1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(p_cantidad1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(p_vencimiento1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(38, 38, 38)
-                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(p_nacional1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_azul1)
-                    .addComponent(cb_rojo1))
-                .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(dialog_ModLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(b_modProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(dialog_ModLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(dialog_ModLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cb_verde1)
-                            .addComponent(cb_giallo1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cb_blanco1)
-                        .addContainerGap(19, Short.MAX_VALUE))))
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -762,8 +625,18 @@ public class Login extends javax.swing.JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
         nv = sdf.format(v);
 
+        boolean verifica = true;
+        for (Bebida item : cargados) {
+            if (item.equals(c)) {
+                verifica = false;
+            }
+        }
+
         if (c.equals("") || m.equals("") || n.equals("") || p_vencimiento == null) {
             JOptionPane.showMessageDialog(this, "Debe ingresar todos los campos requeridos");
+        } else if (verifica == false) {
+            JOptionPane.showMessageDialog(this, "El código ya existe");
+            p_codigo.setText("");
         } else {
             Bebida nuevo = new Bebida(c, m, n, az, ah, pert, l, pre, cant, nv);
             if (cb_azul.isSelected()) {
@@ -835,15 +708,18 @@ public class Login extends javax.swing.JFrame {
             modelo.removeRow(table.getSelectedRow());
             table.setModel(modelo);
             items.remove(table.getSelectedRow());
+            cargados.remove(table.getSelectedRow());
         }
     }//GEN-LAST:event_pop_eliminarActionPerformed
 
-    private void pop_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pop_modificarActionPerformed
-        dialog_Mod.setModal(true);
-        dialog_Mod.pack();
-        dialog_Mod.setLocationRelativeTo(this);
-        dialog_Mod.setVisible(true);
-    }//GEN-LAST:event_pop_modificarActionPerformed
+    private void mod_codigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_codigoActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            String s = JOptionPane.showInputDialog("Nuevo Código");
+            items.get(table.getSelectedRow()).setCodigo(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_codigoActionPerformed
 
     private void b_palalistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_palalistaMouseClicked
         DefaultListModel modelo = (DefaultListModel) list.getModel();
@@ -892,16 +768,16 @@ public class Login extends javax.swing.JFrame {
                 bw.newLine();
                 int acum = 0;
                 for (Bebida item : items) {
-                    String linea = item.toString()+"                 "+(int) js_cant.getValue()+"                  L."+item.getPrecio();
-                    acum += (int) js_cant.getValue()*item.getPrecio();
+                    String linea = item.toString() + "                 " + (int) js_cant.getValue() + "                  L." + item.getPrecio();
+                    acum += (int) js_cant.getValue() * item.getPrecio();
                     bw.write(linea);
                     bw.newLine();
                 }
-                bw.write("                    Total:\n                           L."+acum);
+                bw.write("                    Total:\n                           L." + acum);
                 bw.flush();
             } catch (Exception e) {
                 e.printStackTrace();
-            }            
+            }
             bw.close();
             fw.close();
         } catch (IOException ex) {
@@ -909,27 +785,68 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_b_facturarMouseClicked
 
-    private void b_modProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_modProductoMouseClicked
-        String c, m, n, pert, nv = "";
-        int az, ah, l, pre, cant;
-        Date v;
-        c = p_codigo.getText();
-        m = p_marca.getText();
-        n = p_nombre.getText();
-        az = (int) p_azucar.getValue();
-        ah = (int) p_alcohol.getValue();
-        pert = (String) p_nacional.getSelectedItem();
-        l = (int) p_lote.getValue();
-        pre = (int) p_precio.getValue();
-        cant = (int) p_cantidad.getValue();
-        v = p_vencimiento.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
-        nv = sdf.format(v);
-        
-        
-        
-        
-    }//GEN-LAST:event_b_modProductoMouseClicked
+    private void mod_marcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_marcaActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            String s = JOptionPane.showInputDialog("Nueva Marca");
+            items.get(table.getSelectedRow()).setMarca(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_marcaActionPerformed
+
+    private void mod_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_nombreActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            String s = JOptionPane.showInputDialog("Nuevo Nombre");
+            items.get(table.getSelectedRow()).setNombre(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_nombreActionPerformed
+
+    private void mod_azucarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_azucarActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            int s = Integer.parseInt(JOptionPane.showInputDialog("Nueva Cantidad de Azúcar"));
+            items.get(table.getSelectedRow()).setAzucar(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_azucarActionPerformed
+
+    private void mod_alcoholActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_alcoholActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            int s = Integer.parseInt(JOptionPane.showInputDialog("Nueva Cantidad de Alcohol"));
+            items.get(table.getSelectedRow()).setAlcohol(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_alcoholActionPerformed
+
+    private void mod_loteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_loteActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            int s = Integer.parseInt(JOptionPane.showInputDialog("Nuevo Número de Lote"));
+            items.get(table.getSelectedRow()).setLote(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_loteActionPerformed
+
+    private void mod_precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_precioActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            int s = Integer.parseInt(JOptionPane.showInputDialog("Nuevo Precio"));
+            items.get(table.getSelectedRow()).setPrecio(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_precioActionPerformed
+
+    private void mod_cantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mod_cantidadActionPerformed
+        if (table.getSelectedRow() >= 0) {
+            DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+            int s = Integer.parseInt(JOptionPane.showInputDialog("Nueva Cantidad"));
+            items.get(table.getSelectedRow()).setCantidad(s);
+            table.setModel(modelo);
+        }
+    }//GEN-LAST:event_mod_cantidadActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -959,20 +876,13 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_crearProducto;
     private javax.swing.JButton b_facturar;
-    private javax.swing.JButton b_modProducto;
     private javax.swing.JButton b_palalista;
     private javax.swing.JCheckBox cb_azul;
-    private javax.swing.JCheckBox cb_azul1;
     private javax.swing.JCheckBox cb_blanco;
-    private javax.swing.JCheckBox cb_blanco1;
     private javax.swing.JCheckBox cb_giallo;
-    private javax.swing.JCheckBox cb_giallo1;
     private javax.swing.JCheckBox cb_rojo;
-    private javax.swing.JCheckBox cb_rojo1;
     private javax.swing.JCheckBox cb_verde;
-    private javax.swing.JCheckBox cb_verde1;
     private javax.swing.JDialog dialog_Factura;
-    private javax.swing.JDialog dialog_Mod;
     private javax.swing.JDialog dialog_Producto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -981,19 +891,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1010,28 +908,25 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JList<String> list;
     private javax.swing.JMenuItem mi_crearFactura;
     private javax.swing.JMenuItem mi_crearProducto;
+    private javax.swing.JMenuItem mod_alcohol;
+    private javax.swing.JMenuItem mod_azucar;
+    private javax.swing.JMenuItem mod_cantidad;
+    private javax.swing.JMenuItem mod_codigo;
+    private javax.swing.JMenuItem mod_lote;
+    private javax.swing.JMenuItem mod_marca;
+    private javax.swing.JMenuItem mod_nombre;
+    private javax.swing.JMenuItem mod_precio;
     private javax.swing.JSpinner p_alcohol;
-    private javax.swing.JSpinner p_alcohol1;
     private javax.swing.JSpinner p_azucar;
-    private javax.swing.JSpinner p_azucar1;
     private javax.swing.JSpinner p_cantidad;
-    private javax.swing.JSpinner p_cantidad1;
     private javax.swing.JTextField p_codigo;
-    private javax.swing.JTextField p_codigo1;
     private javax.swing.JSpinner p_lote;
-    private javax.swing.JSpinner p_lote1;
     private javax.swing.JTextField p_marca;
-    private javax.swing.JTextField p_marca1;
     private javax.swing.JComboBox<String> p_nacional;
-    private javax.swing.JComboBox<String> p_nacional1;
     private javax.swing.JTextField p_nombre;
-    private javax.swing.JTextField p_nombre1;
     private javax.swing.JSpinner p_precio;
-    private javax.swing.JSpinner p_precio1;
     private com.toedter.calendar.JDateChooser p_vencimiento;
-    private com.toedter.calendar.JDateChooser p_vencimiento1;
     private javax.swing.JMenuItem pop_eliminar;
-    private javax.swing.JMenuItem pop_modificar;
     private javax.swing.JPopupMenu popup;
     private javax.swing.JPopupMenu ppup;
     private javax.swing.JComboBox<String> products;
@@ -1041,4 +936,5 @@ public class Login extends javax.swing.JFrame {
     ArrayList<Bebida> items = new ArrayList();
     int cont = 0;
     Bebida actual;
+    ArrayList<Bebida> cargados = new ArrayList();
 }

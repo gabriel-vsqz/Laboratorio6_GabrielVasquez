@@ -1,14 +1,14 @@
-100|Sula|Arancia|70|0|No|1232|12|2|7/Nov/2020|[Amarillo-77]
-200|Corona|Extra|9|17|Si|1243|31|2|7/Nov/2020|[]
-300|Leyde|Mele|90|0|Si|2154|12|2|7/Nov/2020|[Amarillo-77]
-400|Sula|Narwhal|90|0|Si|2134|12|3|7/Nov/2020|[Amarillo-77]
-500|Bud Light|Bud|7|12|No|2551|31|4|7/Nov/2020|[]
-600|Aloe|Vera|46|0|Si|1244|21|2|7/Nov/2020|[Verde-420]
-700|Naturas|Pomodoro|80|0|No|5124|11|5|7/Nov/2020|[Rojo-69]
-800|Coca-Cola|Uva|90|0|No|9642|20|2|7/Nov/2020|[Azul-4,Rojo-69]
-900|Pepsi|Grapette|78|0|Si|4212|20|1|7/Nov/2020|[Azul-4,Rojo-69]
-110|Pepsi|7UP|40|0|Si|4214|20|4|7/Nov/2020|[Verde-420]
-120|Coca-Cola|Coke|95|0|No|1245|28|2|7/Nov/2020|[Azul-4,Rojo-69]
-130|Best Value|Juice|90|0|No|1256|13|4|7/Nov/2020|[Rojo-69,Amarillo-77]
-140|Heineken|Beer|6|18|No|1683|39|5|7/Nov/2020|[]
-150|Coors Light|Birra|7|20|No|1267|40|5|7/Nov/2020|[]
+100|Sula|Arancia|70|0|No|1232|12|2|7/Nov/2020
+200|Corona|Extra|9|17|Si|1243|31|2|7/Nov/2020
+300|Leyde|Mele|90|0|Si|2154|12|2|7/Nov/2020
+400|Sula|Narwhal|90|0|Si|2134|12|3|7/Nov/2020
+500|Bud Light|Bud|7|12|No|2551|31|4|7/Nov/2020
+600|Aloe|Vera|46|0|Si|1244|21|2|7/Nov/2020
+700|Naturas|Pomodoro|80|0|No|5124|11|5|7/Nov/2020
+800|Coca-Cola|Uva|90|0|No|9642|20|2|7/Nov/2020
+900|Pepsi|Grapette|78|0|Si|4212|20|1|7/Nov/2020
+110|Pepsi|7UP|40|0|Si|4214|20|4|7/Nov/2020
+120|Coca-Cola|Coke|95|0|No|1245|28|2|7/Nov/2020
+130|Best Value|Juice|90|0|No|1256|13|4|7/Nov/2020
+140|Heineken|Beer|6|18|No|1683|39|5|7/Nov/2020
+150|Coors Light|Birra|7|20|No|1267|40|5|7/Nov/2020
