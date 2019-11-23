@@ -63,7 +63,6 @@ public class Inventario {
             fw = new FileWriter(archivo, false);
             bw = new BufferedWriter(fw);
             for (Bebida t : productos) {
-                //String codigo, String marca, String nombre, int azucar, int alcohol, String pertenencia, int lote, int precio, int cantidad, String vencimiento
                 bw.write(t.getCodigo()+ "|");
                 bw.write(t.getMarca() + "|");
                 bw.write(t.getNombre() + "|");

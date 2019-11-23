@@ -33,9 +33,10 @@ public class Login extends javax.swing.JFrame {
                 br = new BufferedReader(fr);
                 String linea;
                 while ((linea = br.readLine()) != null) {
-                    Object[] atributo = linea.split(";");
-                    //productos.add(new Bebida(sc.nextInt(),sc.next(),sc.nextInt(),sc.nextInt(),sc.nextInt(),sc.next())
-                    cargados.add(new Bebida((String) atributo[0], (String) atributo[1], (String) atributo[2], Integer.parseInt(atributo[3].toString()), Integer.parseInt(atributo[4].toString()), (String) atributo[5], Integer.parseInt(atributo[6].toString()), Integer.parseInt(atributo[7].toString()), Integer.parseInt(atributo[8].toString()), (String) atributo[9]));
+                    Object[] atributo = linea.split("|");
+                    cargados.add(new Bebida((String) atributo[0], (String) atributo[1], (String) atributo[2], Integer.parseInt(atributo[3].toString()), Integer.parseInt(atributo[4].toString()),
+                            (String) atributo[5], Integer.parseInt(atributo[6].toString()), Integer.parseInt(atributo[7].toString()), Integer.parseInt(atributo[8].toString()), (String) atributo[9],
+                            (String)atributo[10] ));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -45,6 +46,7 @@ public class Login extends javax.swing.JFrame {
 
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             for (Bebida b : cargados) {
+                
                 Object[] cargado = {
                     b.getCodigo(),
                     b.getMarca(),
@@ -54,7 +56,7 @@ public class Login extends javax.swing.JFrame {
                     b.getPertenencia(),
                     b.getLote(),
                     b.getPrecio(),
-                    b.getColorantes(),
+                    null,
                     b.getCantidad(),
                     b.getVencimiento()
                 };
@@ -691,6 +693,8 @@ public class Login extends javax.swing.JFrame {
             DefaultComboBoxModel cb = (DefaultComboBoxModel) products.getModel();
             cb.addElement(nuevo);
             products.setModel(cb);
+            
+            
         }
     }//GEN-LAST:event_b_crearProductoMouseClicked
 
@@ -937,4 +941,6 @@ public class Login extends javax.swing.JFrame {
     int cont = 0;
     Bebida actual;
     ArrayList<Bebida> cargados = new ArrayList();
+    Date rn;
+    Inventario i = new Inventario("./Productos.txt");
 }
